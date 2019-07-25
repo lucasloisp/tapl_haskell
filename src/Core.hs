@@ -1,4 +1,4 @@
-module Core (eval1) where
+module Core (eval1, eval, evalBig) where
 
 import Syntax
 
@@ -38,4 +38,9 @@ eval1 (TmIsZero fi t1) = do
   t1' <- eval1 t1
   return $ TmIsZero fi t1'
 eval1 _ = Nothing
+
+eval :: Term -> Term
+eval t = case (eval1 t) of Nothing -> t
+                           Just t' -> eval t'
+evalBig :: Term -> Term
 
