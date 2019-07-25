@@ -43,4 +43,18 @@ eval :: Term -> Term
 eval t = case (eval1 t) of Nothing -> t
                            Just t' -> eval t'
 evalBig :: Term -> Term
-
+evalBig t@(TmIsZero _ t1) = case evalBig t1 of (TmZero _)    -> (TmTrue ())
+                                               (TmSucc _ _)  -> (TmFalse ())
+                                               _             -> t
+evalBig t@(TmPred _ t1) = case evalBig t1 of (TmZero _)      -> (TmZero ())
+                                             (TmSucc _ nv)   -> nv
+					     _               -> t
+evalBig t@(TmSucc _ t1) = case evalBig t1 of (TmZero _)      -> (TmSucc () (TmZero ()))
+                                             (TmSucc _ nv)   -> (TmSucc () nv)
+					     _               -> t
+evalBig t@(TmIf _ t1 t2 t3) = case evalBig t1 of (TmTrue _)  -> t2'
+                                                 (TmFalse _) -> t3'
+						 _           -> t
+			      where t2' = evalBig t2
+			            t3' = evalBig t3
+evalBig t = t
