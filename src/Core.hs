@@ -40,8 +40,8 @@ eval1 (TmIsZero fi t1) = do
 eval1 _ = Nothing
 
 eval :: Term -> Term
-eval t = case (eval1 t) of Nothing -> t
-                           Just t' -> eval t'
+eval t = case eval1 t of Nothing -> t
+                         Just t' -> eval t'
 evalBig :: Term -> Term
 evalBig t@(TmIsZero _ t1) = case evalBig t1 of (TmZero _)    -> (TmTrue ())
                                                (TmSucc _ _)  -> (TmFalse ())
