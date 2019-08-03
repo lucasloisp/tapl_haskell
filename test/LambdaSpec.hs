@@ -21,4 +21,15 @@ spec =  do
     it "Shifts both terms in an application" $
       termShift 2 (TmApp (TmAbs (TmApp (TmVar 0) (TmVar 1))) (TmVar 4)) `shouldBe`
       (TmApp (TmAbs (TmApp (TmVar 0) (TmVar 3))) (TmVar 6))
+  describe "Lambda.Core.termSubst" $ do
+    it "Substitutes a free variable for another one" $ property $
+      \nnj ->
+      \nns ->
+        let j = getNonNegative nnj
+	    s = TmVar (getNonNegative nns)
+	in termSubst j s (TmVar j) == s
+    it "Leaves bound variables alone when changing the same index for a free one" $ property $
+      \nns ->
+	let s = TmVar (getNonNegative nns)
+        in termSubst 0 s (TmAbs (TmVar 0)) == (TmAbs (TmVar 0)) 
 
