@@ -32,4 +32,14 @@ spec =  do
       \nns ->
 	let s = TmVar (getNonNegative nns)
         in termSubst 0 s (TmAbs (TmVar 0)) == (TmAbs (TmVar 0)) 
-
+  describe "Lambda.Core.eval" $ do
+    it "considers bound variables are used in the evaluation" $
+      eval (TmApp (TmAbs (TmApp (TmApp (TmVar 1) (TmVar 0)) (TmVar 2))) (TmAbs (TmVar 0)))
+      `shouldBe` (TmApp (TmApp (TmVar 0) (TmAbs (TmVar 0))) (TmVar 1))
+    it "evaluates a muli variable abstraction" $
+      eval (TmApp (TmApp (TmAbs (TmAbs (TmApp (TmVar 1) (TmVar 0)))) (TmAbs (TmVar 0))) (TmAbs (TmVar 0)))
+      `shouldBe` (TmAbs (TmVar 0))
+  describe "Lambda.Core.eval1" $ do
+    it "applies a lambda" $
+      eval1 (TmApp (TmAbs (TmVar 0)) (TmAbs (TmVar 0)))
+      `shouldBe` Just (TmAbs (TmVar 0))
