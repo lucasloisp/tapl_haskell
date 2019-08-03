@@ -1,4 +1,4 @@
-module Syntax where
+module Arith.Syntax where
 
 type Info = ()
 dummyinfo :: Info

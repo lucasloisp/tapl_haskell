@@ -1,6 +1,6 @@
-module Core (eval1, eval, evalBig) where
+module Arith.Core (eval1, eval, evalBig) where
 
-import Syntax
+import Arith.Syntax
 
 
 

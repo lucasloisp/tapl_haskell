@@ -2,8 +2,8 @@ module ArithSpec (spec) where
 
 import Test.Hspec
 import Control.Exception (evaluate)
-import Core
-import Syntax
+import Arith.Core
+import Arith.Syntax
 
 spec :: Spec
 spec =  do
